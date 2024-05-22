@@ -13,9 +13,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+common_packages:
+- bcftools
+- vcftools
+- libvcflib-tools
+- libvcflib-dev
+- mono-runtime
+- xvfb
+- bedtools
+- bowtie2
+
 python_packages:
-- python2
-- python3
-- python3-pip
-- python3-setuptools
-- python3-virtualenv
+- selenium
+- pandas
+- umi_tools

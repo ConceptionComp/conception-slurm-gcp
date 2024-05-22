@@ -1,0 +1,142 @@
+---
+apps:
+  - name: cellranger
+    url: gs://conception-automation-misc/software/cellranger-7.0.1.tar.gz
+    dest: '{{paths.apps}}/cellranger/7.0.1'
+    modulefiles: '{{paths.modulefiles}}/cellranger/7.0.1.lua'
+    path: '{{paths.apps}}/cellranger/7.0.1'
+    gcp: true
+  - name: cellranger-arc
+    url: gs://conception-automation-misc/software/cellranger-arc-2.0.2.tar.gz
+    dest: '{{paths.apps}}/cellranger-arc/2.0.2'
+    modulefiles: '{{paths.modulefiles}}/cellranger-arc/2.0.2.lua'
+    path: '{{paths.apps}}/cellranger-arc/2.0.2'
+    gcp: true
+  - name: bismark
+    url: gs://conception-automation-misc/software/Bismark-0.22.3.tar.gz
+    dest: '{{paths.apps}}/bismark/0.22.3'
+    modulefiles: '{{paths.modulefiles}}/bismark/0.22.3.lua'
+    path: '{{paths.apps}}/bismark/0.22.3'
+    gcp: true
+  - name: htslib
+    url:  https://github.com/samtools/htslib/releases/download/1.17/htslib-1.17.tar.bz2
+    dest: '/tmp/htslib'
+    path: '/tmp/htslib'
+    install:
+      dir: '/tmp/htslib'
+      cmds:
+        - autoreconf -i
+        - ./configure
+        - make
+        - make install
+  - name: star
+    url: https://github.com/alexdobin/STAR/archive/2.7.10a.tar.gz
+    dest: '{{paths.apps}}/STAR/2.7.10a'
+    modulefiles: '{{paths.modulefiles}}/STAR/2.7.10a.lua'
+    install:
+      dir: '{{paths.apps}}/STAR/2.7.10a/source'
+      cmds:
+        - 'make'
+  - name: trimgalore
+    url: https://github.com/FelixKrueger/TrimGalore/archive/refs/tags/0.6.7.zip
+    dest: '{{paths.apps}}/TrimGalore/0.6.7'
+    modulefiles: '{{paths.modulefiles}}/TrimGalore/0.6.7.lua'
+    install:
+      dir: '{{paths.apps}}/TrimGalore/0.6.7/TrimGalore-0.6.7'
+  - name: rsem
+    url: https://github.com/deweylab/RSEM/archive/v1.3.3.tar.gz
+    dest: '{{paths.apps}}/RSEM/v1.3.3'
+    modulefiles: '{{paths.modulefiles}}/RSEM/v1.3.3.lua'
+    install:
+      dir: '{{paths.apps}}/RSEM/v1.3.3'
+      cmds:
+        - 'make'
+        - 'make install'
+  - name: fastqscreen
+    url: https://github.com/StevenWingett/FastQ-Screen/archive/refs/tags/v0.15.2.zip
+    dest: '{{paths.apps}}/FastQ-Screen/v0.15.2'
+    modulefiles: '{{paths.modulefiles}}/FastQ-Screen/v0.15.2.lua'
+    path: '{{paths.apps}}/FastQ-Screen/v0.15.2/FastQ-Screen-0.15.2'
+  - name: fasqc
+    url: https://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.11.9.zip
+    dest: '{{paths.apps}}/fastqc/v0.11.9'
+    modulefiles: '{{paths.modulefiles}}/fastqc/v0.11.9.lua'
+    install:
+      dir: '{{paths.apps}}/fastqc/v0.11.9/FastQC'
+      cmds:
+        - chmod +x fastqc
+  - name: samtools
+    url: https://github.com/samtools/samtools/releases/download/1.15.1/samtools-1.15.1.tar.bz2
+    dest: '{{paths.apps}}/samtools/1.15.1'
+    modulefiles: '{{paths.modulefiles}}/samtools/1.15.1.lua'
+    install:
+      dir: '{{paths.apps}}/samtools/1.15.1'
+      cmds:
+        - './configure --prefix={{paths.apps}}/samtools/1.15.1'
+        - 'make'
+        - 'make install'
+  - name: pandoc
+    url: https://github.com/jgm/pandoc/releases/download/2.19.2/pandoc-2.19.2-linux-amd64.tar.gz
+    dest: '{{paths.apps}}/pandoc/2.19.2'
+    modulefiles: '{{paths.modulefiles}}/pandoc/2.19.2.lua'
+    path: '{{paths.apps}}/pandoc/2.19.2/bin'
+  - name: sratoolkit
+    url: https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/current/sratoolkit.current-ubuntu64.tar.gz
+    dest: '{{paths.apps}}/sratoolkit/current'
+    modulefiles: '{{paths.modulefiles}}/sratoolkit/current.lua'
+    path: '{{paths.apps}}/sratoolkit/current/bin'
+  - name: gatk
+    url: https://github.com/broadinstitute/gatk/releases/download/4.3.0.0/gatk-4.3.0.0.zip
+    dest: '{{paths.apps}}/gatk/4.3.0.0'
+    modulefiles: '{{paths.modulefiles}}/gatk/4.3.0.0.lua'
+    install:
+      dir: '{{paths.apps}}/gatk/4.3.0.0/gatk-4.3.0.0'
+      cmds:
+        - sed -ie 's/python/python2.7/g' gatk
+  # - name: macs
+  #   url: https://github.com/macs3-project/MACS/archive/refs/tags/v2.2.7.1.tar.gz
+  #   dest: '{{paths.apps}}/macs/v2.2.7.1'
+  #   modulefiles: '{{paths.modulefiles}}/macs/v2.2.7.1.lua'
+  #   install:
+  #     dir: '{{paths.apps}}/macs/v2.2.7.1'
+  #     cmds:
+  #       - sed -i 's/install_requires = \[f"numpy>={numpy_requires}",\]/install_requires = \[f"numpy{numpy_requires}",\]/' setup.py
+  #       - pip3 install -e .
+  - name: homer
+    url:  http://homer.ucsd.edu/homer/configureHomer.pl
+    dest: '{{paths.apps}}/homer/latest'
+    modulefiles: '{{paths.modulefiles}}/homer/latest.lua'
+    path: '{{paths.apps}}/homer/latest/bin/'
+    install:
+      dir: '{{paths.apps}}/homer/latest/'
+      cmds:
+        - 'perl {{paths.apps}}/homer/latest/configureHomer.pl -install'
+        - 'perl {{paths.apps}}/homer/latest/configureHomer.pl -install hg38'
+  - name: fastx_toolkit
+    url:  http://hannonlab.cshl.edu/fastx_toolkit/fastx_toolkit_0.0.13_binaries_Linux_2.6_amd64.tar.bz2
+    dest: '{{paths.apps}}/fastx_toolkit/0.0.13'
+    modulefiles: '{{paths.modulefiles}}/fastx_toolkit/0.0.13.lua'
+    path: '{{paths.apps}}/fastx_toolkit/0.0.13/bin/'
+    install:
+      dir: '{{paths.apps}}/fastx_toolkit/0.0.13/bin'
+      cmds:
+        - chmod +x *
+  - name: cellsnp-lite
+    url:  https://github.com/single-cell-genetics/cellsnp-lite/archive/refs/tags/v1.2.3.tar.gz
+    dest: '{{paths.apps}}/cellsnp-lite/v1.2.3'
+    modulefiles: '{{paths.modulefiles}}/cellsnp-lite/v1.2.3.lua'
+    path: '{{paths.apps}}/cellsnp-lite/v1.2.3'
+    install:
+      dir: '{{paths.apps}}/cellsnp-lite/v1.2.3'
+      cmds:
+        - autoreconf -iv
+        - ./configure
+        - make
+        - make install
+  - name: seqkit
+    url: https://github.com/shenwei356/seqkit/releases/download/v2.4.0/seqkit_linux_amd64.tar.gz
+    dest: '{{paths.apps}}/seqkit/v2.4.0'
+    modulefiles: '{{paths.modulefiles}}/seqkit/v2.4.0.lua'
+    path: '{{paths.apps}}/seqkit/v2.4.0'
+# default_modules:
+#   - 

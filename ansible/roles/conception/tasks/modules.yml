@@ -1,0 +1,63 @@
+---
+- name: Mkdir
+  file:
+    path: "{{ item.dest }}"
+    state: directory
+- name: Make sure destination dir exists
+  file:
+    path: "{{ item.modulefiles | dirname }}"
+    recurse: true
+    state: directory
+  when: item.modulefiles is defined
+- name: Download from GCP
+  block:
+    - name: Get file from Bucket
+      shell: gcloud storage cp {{ item.url }} /tmp
+    - name: Manually set archive info
+      set_fact:
+        app_archive1: "{{ app_archive1 | default({}) | combine ({ 'dest': '/tmp/' + item.url | basename }) }}"
+  when: item.gcp is defined
+- name: Download Tarball
+  get_url:
+    url: "{{ item.url }}"
+    dest: /tmp
+  register: app_archive2
+  when: item.gcp is not defined
+- name: Set app_archive
+  set_fact:
+    app_archive: "{{ app_archive1 if app_archive2 is skipped else app_archive2 }}"
+- name: Item output
+  debug: msg="{{ app_archive }}"
+- name: Untar Additional Apps
+  unarchive:
+    src: "{{ app_archive.dest }}"
+    dest: "{{ item.dest }}"
+    remote_src: yes
+    extra_opts:
+      - --strip-components=1
+  when: app_archive.dest is search(".tar.*")
+- name: Unzip
+  unarchive:
+    src: "{{app_archive.dest}}"
+    dest: "{{ item.dest }}"
+    remote_src: yes
+  when: item.url is search(".zip")
+- name: Copy files over
+  copy:
+    src: "{{app_archive.dest}}"
+    dest: "{{ item.dest }}"
+    remote_src: yes
+  when: item.url is not search(".zip") or item.url is not search(".tar.*")
+- name: Run Additional Installs
+  shell:
+    chdir: "{{ item.install.dir }}"
+    cmd: "{{ command }}"
+  loop: "{{ item.install.cmds }}"
+  loop_control: 
+    loop_var: command
+  when: item.install is defined and item.install.cmds is defined
+- name: Create Modulefile
+  template:
+    src: modulefile.lua.j2
+    dest: "{{ item.modulefiles }}"
+  when: item.modulefiles is defined

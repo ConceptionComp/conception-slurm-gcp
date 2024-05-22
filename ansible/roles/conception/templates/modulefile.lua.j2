@@ -1,0 +1,7 @@
+{% if item.path is defined %}
+prepend_path("PATH", "{{item.path}}")
+{% elif item.install.dir is defined %}
+prepend_path("PATH", "{{item.install.dir}}")
+{% else %}
+prepend_path("PATH", "{{item.dest}}")
+{% endif %}
