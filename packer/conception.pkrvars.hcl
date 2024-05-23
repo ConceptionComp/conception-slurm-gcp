@@ -87,7 +87,7 @@ disk_size = 75
 disk_type = "pd-ssd"
 
 machine_type = "n2-standard-8"
-preemptible  = false
+preemptible  = true
 
 ### Builds ###
 
