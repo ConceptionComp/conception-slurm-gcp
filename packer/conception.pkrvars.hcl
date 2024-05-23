@@ -48,7 +48,7 @@ network_project_id = "conception-shared-vpc"
 # subnetwork = "conception-automation-subnet"
 subnetwork = "conception-automation-us-central1-subnet"
 
-use_iap = true
+# use_iap = true
 
 
 tags = [
@@ -83,10 +83,10 @@ service_account_scopes = [
   "https://www.googleapis.com/auth/devstorage.full_control",
 ]
 
-disk_size = 50
+disk_size = 75
 disk_type = "pd-ssd"
 
-machine_type = "n2-standard-4"
+machine_type = "n2-standard-8"
 preemptible  = false
 
 ### Builds ###
