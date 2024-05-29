@@ -1,0 +1,34 @@
+---
+# tasks file for ansible-role-R
+- name: Gather OS specific variables
+  include_vars: '{{ item }}'
+  with_first_found:
+  - '{{ ansible_distribution|lower }}-{{ ansible_distribution_version }}.yml'
+  - '{{ ansible_distribution|lower }}-{{ ansible_distribution_major_version }}.yml'
+  - '{{ ansible_distribution|lower }}.yml'
+  - '{{ ansible_os_family|lower }}.yml'
+  - '{{ ansible_os_family|lower }}-{{ansible_distribution_major_version}}.yml'
+
+- include_tasks: configure_apt.yml
+  when: ansible_pkg_mgr == 'apt'
+
+- name: Download R
+  get_url: 
+    url: 'https://cran.r-project.org/src/base/R-4/R-{{ r_version }}.tar.gz'
+    dest: /tmp
+  register: r_archive
+
+- name: Untar R
+  unarchive:
+    src: "{{ r_archive.dest }}"
+    dest: "/tmp"
+    remote_src: yes
+
+- name: Install R
+  shell:
+    chdir: "/tmp/R-{{ r_version }}"
+    cmd: "{{ item }}"
+  loop:
+  - ./configure --enable-R-shlib --enable-memory-profiling --with-blas --with-lapack
+  - make
+  - make install

@@ -1,0 +1,11 @@
+selenium
+pandas
+umi_tools
+deeptools
+vireoSNP
+MACS2
+multiqc
+cutadapt
+sinto
+keyring
+keyrings.google-artifactregistry-auth

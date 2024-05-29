@@ -166,6 +166,8 @@
     - ansible_architecture == "x86_64"
   - logrotate
   - python
+  - r
+  - conception
   - role: ldap
     when: ansible_os_family != 'Debian'
   - scripts

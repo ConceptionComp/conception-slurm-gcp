@@ -6,3 +6,10 @@ google-cloud-storage~=2.0
 google-cloud-tpu~=1.10.0
 more-executors~=2.0
 prometheus-client~=0.16
+multiqc
+cutadapt
+sinto
+keyring
+keyrings.google-artifactregistry-auth
+pyega3
+pyopenssl
