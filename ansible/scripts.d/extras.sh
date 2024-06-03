@@ -29,4 +29,4 @@ echo "* soft nofile 65535" >> /etc/security/limits.conf
 echo "* hard nofile 65535" >> /etc/security/limits.conf
 echo "root soft nofile 65535" >> /etc/security/limits.conf
 echo "root hard nofile 65535" >> /etc/security/limits.conf
-echo "session required pam_limits.so" >> /etc/pam.d/common-session
+# echo "session required pam_limits.so" >> /etc/pam.d/common-session/
