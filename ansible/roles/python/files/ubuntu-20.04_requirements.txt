@@ -4,6 +4,8 @@ google-cloud-bigquery~=2.0
 google-cloud-secret-manager~=2.0
 google-cloud-storage~=2.0
 google-cloud-tpu~=1.10.0
+google-cloud-pubsub
+google-cloud-firestore
 more-executors~=2.0
 prometheus-client~=0.16
 multiqc
