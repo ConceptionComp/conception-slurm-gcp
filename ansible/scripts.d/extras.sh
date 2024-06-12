@@ -22,8 +22,11 @@ curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
 python2 get-pip.py
 rm get-pip.py
 
+curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
+
 pip3 install --upgrade requests
 pip3 install --upgrade --extra-index-url  https://us-central1-python.pkg.dev/conception-cluster/conception-python-library/simple conception-python-library
+
 
 echo "* soft nofile 65535" >> /etc/security/limits.conf
 echo "* hard nofile 65535" >> /etc/security/limits.conf
