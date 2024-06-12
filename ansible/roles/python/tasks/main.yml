@@ -34,8 +34,7 @@
 
 - name: update packages
   apt:
-    update_cache: yes
-    upgrade: 'yes'
+    update_cache: true
 
 - name: update alternatives to python38
   shell:
