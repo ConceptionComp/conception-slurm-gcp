@@ -23,10 +23,18 @@
   - '{{ ansible_os_family|lower }}-{{ ansible_distribution_major_version }}.yml'
   - '{{ ansible_os_family|lower }}.yml'
 
+- name: Configure Python repo
+  apt_repository:
+    repo: ppa:deadsnakes/ppa
+
 - name: Install Packages
   package:
     name: '{{python_packages}}'
     state: present
+
+- name: update packages
+  apt:
+    update_cache: true
 
 - name: update alternatives to python38
   shell:
