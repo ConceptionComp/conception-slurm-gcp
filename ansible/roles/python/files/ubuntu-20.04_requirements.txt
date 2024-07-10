@@ -15,3 +15,4 @@ keyring
 keyrings.google-artifactregistry-auth
 pyega3
 pyopenssl
+psycopg2
