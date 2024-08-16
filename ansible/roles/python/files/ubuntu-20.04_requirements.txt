@@ -8,7 +8,7 @@ google-cloud-pubsub
 google-cloud-firestore
 more-executors~=2.0
 prometheus-client~=0.16
-packaging
+packaging>=24
 multiqc
 cutadapt
 sinto
