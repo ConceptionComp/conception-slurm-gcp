@@ -6,6 +6,12 @@ apps:
     modulefiles: '{{paths.modulefiles}}/cellranger/7.0.1.lua'
     path: '{{paths.apps}}/cellranger/7.0.1'
     gcp: true
+  - name: cellranger-8
+    url: gs://conception-automation-misc/software/cellranger-8.0.1.tar.gz
+    dest: '{{paths.apps}}/cellranger/8.0.1'
+    modulefiles: '{{paths.modulefiles}}/cellranger/8.0.1.lua'
+    path: '{{paths.apps}}/cellranger/8.0.1'
+    gcp: true
   - name: cellranger-arc
     url: gs://conception-automation-misc/software/cellranger-arc-2.0.2.tar.gz
     dest: '{{paths.apps}}/cellranger-arc/2.0.2'
