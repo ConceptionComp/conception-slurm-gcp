@@ -13,7 +13,7 @@ apps:
     path: '{{paths.apps}}/cellranger/8.0.1'
     gcp: true
   - name: cellranger-arc
-    url: gs://conception-automation-misc/sofnbtware/cellranger-arc-2.0.2.tar.gz
+    url: gs://conception-automation-misc/software/cellranger-arc-2.0.2.tar.gz
     dest: '{{paths.apps}}/cellranger-arc/2.0.2'
     modulefiles: '{{paths.modulefiles}}/cellranger-arc/2.0.2.lua'
     path: '{{paths.apps}}/cellranger-arc/2.0.2'
