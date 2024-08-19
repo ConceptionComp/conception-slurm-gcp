@@ -13,7 +13,7 @@ apps:
     path: '{{paths.apps}}/cellranger/8.0.1'
     gcp: true
   - name: cellranger-arc
-    url: gs://conception-automation-misc/software/cellranger-arc-2.0.2.tar.gz
+    url: gs://conception-automation-misc/sofnbtware/cellranger-arc-2.0.2.tar.gz
     dest: '{{paths.apps}}/cellranger-arc/2.0.2'
     modulefiles: '{{paths.modulefiles}}/cellranger-arc/2.0.2.lua'
     path: '{{paths.apps}}/cellranger-arc/2.0.2'
@@ -119,12 +119,13 @@ apps:
         - 'perl {{paths.apps}}/homer/latest/configureHomer.pl -install'
         - 'perl {{paths.apps}}/homer/latest/configureHomer.pl -install hg38'
   - name: fastx_toolkit
-    url:  http://hannonlab.cshl.edu/fastx_toolkit/fastx_toolkit_0.0.13_binaries_Linux_2.6_amd64.tar.bz2
-    dest: '{{paths.apps}}/fastx_toolkit/0.0.13'
-    modulefiles: '{{paths.modulefiles}}/fastx_toolkit/0.0.13.lua'
-    path: '{{paths.apps}}/fastx_toolkit/0.0.13/bin/'
+    # url:  http://hannonlab.cshl.edu/fastx_toolkit/fastx_toolkit_0.0.13_binaries_Linux_2.6_amd64.tar.bz2
+    url: https://github.com/agordon/fastx_toolkit/releases/download/0.0.14/fastx_toolkit-0.0.14.tar.bz2
+    dest: '{{paths.apps}}/fastx_toolkit/0.0.14'
+    modulefiles: '{{paths.modulefiles}}/fastx_toolkit/0.0.14.lua'
+    path: '{{paths.apps}}/fastx_toolkit/0.0.14/bin/'
     install:
-      dir: '{{paths.apps}}/fastx_toolkit/0.0.13/bin'
+      dir: '{{paths.apps}}/fastx_toolkit/0.0.14/bin'
       cmds:
         - chmod +x *
   - name: cellsnp-lite
