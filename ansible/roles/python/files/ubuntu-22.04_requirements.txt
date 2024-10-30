@@ -8,6 +8,7 @@ google-cloud-pubsub
 google-cloud-firestore
 more-executors~=2.0
 prometheus-client~=0.16
+packaging>=24
 multiqc
 cutadapt
 sinto
@@ -15,3 +16,4 @@ keyring
 keyrings.google-artifactregistry-auth
 pyega3
 pyopenssl
+psycopg2
