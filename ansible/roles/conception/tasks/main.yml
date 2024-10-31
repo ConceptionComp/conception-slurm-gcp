@@ -68,7 +68,7 @@
 - name: Create and Install cuda venv
   pip:
      requirements: '{{ cuda_requirements_file.results[0].dest }}'
-     virtualenv: /opt/cuda-venv
+     virtualenv: /opt/venv/cuda-venv
      virtualenv_command: /usr/bin/python3.10 -m venv
 
 - name: Install Module apps
