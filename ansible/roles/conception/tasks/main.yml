@@ -64,6 +64,11 @@
   - '{{ ansible_os_family|lower }}_requirements_cuda.txt'
   register: cuda_requirements_file
 
+- name: Make sure venv  dir exists
+  file:
+    path: /opt/venv
+    recurse: true
+    state: directory
 
 - name: Create and Install cuda venv
   pip:
