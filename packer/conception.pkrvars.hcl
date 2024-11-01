@@ -66,7 +66,7 @@ tags = [
 install_cuda = true
 # install_ompi = false
 # install_lustre = false
-# install_gcsfuse = false
+install_gcsfuse = true
 
 prefix = "conception"
 
