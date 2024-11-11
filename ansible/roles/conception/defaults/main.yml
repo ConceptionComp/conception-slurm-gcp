@@ -147,5 +147,10 @@ apps:
     dest: '{{paths.apps}}/seqkit/v2.4.0'
     modulefiles: '{{paths.modulefiles}}/seqkit/v2.4.0.lua'
     path: '{{paths.apps}}/seqkit/v2.4.0'
+  - name: fiji
+    url: https://downloads.imagej.net/fiji/latest/fiji-linux64.zip
+    dest: '{{paths.apps}}/fiji/latest'
+    modulefiles: '{{paths.modulefiles}}/fiji/latest.lua'
+    path: '{{paths.apps}}/fiji/latest'
 # default_modules:
 #   - 
