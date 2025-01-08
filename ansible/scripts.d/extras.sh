@@ -30,11 +30,11 @@ curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.s
 pip3 install --upgrade requests
 pip3 install --upgrade --extra-index-url  https://us-central1-python.pkg.dev/conception-cluster/conception-python-library/simple conception-python-library
 
+mkdir -p /opt/apps/nextflow/latest
+mkdir -p /opt/apps/modulefiles/nextflow/
 curl -s https://get.nextflow.io | bash 
 chmod +x nextflow
-mkdir -p /opt/apps/nextflow/latest
 mv nextflow /opt/apps/nextflow/latest/
-mkdir -p /opt/apps/modulefiles/nextflow/
 echo 'prepend_path("PATH", "/opt/apps/nextflow/latest")' > /opt/apps/modulefiles/nextflow/latest.lua
 
 echo "* soft nofile 65535" >> /etc/security/limits.conf
