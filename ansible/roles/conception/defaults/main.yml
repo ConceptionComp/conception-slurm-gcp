@@ -151,6 +151,6 @@ apps:
     url: https://downloads.imagej.net/fiji/latest/fiji-linux64.zip
     dest: '{{paths.apps}}/fiji/latest'
     modulefiles: '{{paths.modulefiles}}/fiji/latest.lua'
-    path: '{{paths.apps}}/fiji/latest'
+    path: '{{paths.apps}}/fiji/latest/Fiji.app'
 # default_modules:
 #   - 
