@@ -32,9 +32,9 @@ pip3 install --upgrade --extra-index-url  https://us-central1-python.pkg.dev/con
 
 mkdir -p /opt/apps/nextflow/latest
 mkdir -p /opt/apps/modulefiles/nextflow/
+cd /opt/apps/nextflow/latest
 curl -s https://get.nextflow.io | bash 
 chmod +x nextflow
-mv nextflow /opt/apps/nextflow/latest/
 echo 'prepend_path("PATH", "/opt/apps/nextflow/latest")' > /opt/apps/modulefiles/nextflow/latest.lua
 
 echo "* soft nofile 65535" >> /etc/security/limits.conf
