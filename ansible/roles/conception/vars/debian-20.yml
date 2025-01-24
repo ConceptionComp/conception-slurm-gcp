@@ -22,6 +22,8 @@ common_packages:
 - xvfb
 - bedtools
 - bowtie2
+- pigz
+- libgsl-dev
 
 python_packages:
 - selenium

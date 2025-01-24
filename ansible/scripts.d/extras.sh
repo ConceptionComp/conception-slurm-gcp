@@ -5,6 +5,9 @@ set -eo pipefail
 
 echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
 curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
+add-apt-repository -y ppa:deadsnakes/ppa
+chgrp -Rh 2345 /opt/venv
+chmod -R 775 /opt/venv
 apt-get update &&  apt-get install -y google-cloud-cli
 
 cd /opt/apps
@@ -27,6 +30,12 @@ curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.s
 pip3 install --upgrade requests
 pip3 install --upgrade --extra-index-url  https://us-central1-python.pkg.dev/conception-cluster/conception-python-library/simple conception-python-library
 
+mkdir -p /opt/apps/nextflow/latest
+mkdir -p /opt/apps/modulefiles/nextflow/
+cd /opt/apps/nextflow/latest
+curl -s https://get.nextflow.io | bash 
+chmod +x nextflow
+echo 'prepend_path("PATH", "/opt/apps/nextflow/latest")' > /opt/apps/modulefiles/nextflow/latest.lua
 
 echo "* soft nofile 65535" >> /etc/security/limits.conf
 echo "* hard nofile 65535" >> /etc/security/limits.conf

@@ -51,6 +51,31 @@
     executable: pip3
     state: present
 
+- name: Copy Cuda Pip Requirements File
+  copy:
+    src: '{{ item | basename }}'
+    dest: /tmp/{{ item | basename }}
+  with_first_found:
+  - '{{ ansible_distribution|lower }}-{{ ansible_distribution_version }}_requirements_cuda.txt'
+  - '{{ ansible_distribution|lower }}-{{ ansible_distribution_major_version }}_requirements_cuda.txt'
+  - '{{ ansible_distribution|lower }}_requirements_cuda.txt'
+  - '{{ ansible_os_family|lower }}-{{ ansible_distribution_version }}_requirements_cuda.txt'
+  - '{{ ansible_os_family|lower }}-{{ ansible_distribution_major_version }}_requirements_cuda.txt'
+  - '{{ ansible_os_family|lower }}_requirements_cuda.txt'
+  register: cuda_requirements_file
+
+- name: Make sure venv dir exists
+  file:
+    path: /opt/venv
+    recurse: true
+    state: directory
+
+- name: Create and Install cuda venv
+  pip:
+     requirements: '{{ cuda_requirements_file.results[0].dest }}'
+     virtualenv: /opt/venv/cuda-venv
+     virtualenv_command: /usr/bin/python3.10 -m venv
+
 - name: Install Module apps
   include_tasks: modules.yml
   loop: "{{ apps }}"

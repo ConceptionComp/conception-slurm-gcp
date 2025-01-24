@@ -1,0 +1,8 @@
+pandas
+numpy
+scipy
+matplotlib
+# opencv-python-headless<4.3
+opencv-python-headless
+cellpose
+ipywidgets
