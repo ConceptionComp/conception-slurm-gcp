@@ -9,3 +9,10 @@ cutadapt
 sinto
 keyring
 keyrings.google-artifactregistry-auth
+scanpy
+anndata
+skmisc
+leidenalg
+scanorama
+harmonypy
+doubletdetection
