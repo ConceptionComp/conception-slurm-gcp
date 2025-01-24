@@ -11,7 +11,7 @@ keyring
 keyrings.google-artifactregistry-auth
 scanpy
 anndata
-skmisc
+# skmisc
 leidenalg
 scanorama
 harmonypy
