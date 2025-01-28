@@ -29,3 +29,4 @@ python_packages:
 - selenium
 - pandas
 - umi_tools
+- scanpy
