@@ -17,4 +17,3 @@ keyrings.google-artifactregistry-auth
 pyega3
 pyopenssl
 psycopg2
-setuptools
