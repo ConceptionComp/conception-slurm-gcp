@@ -68,7 +68,7 @@
 
 - name: Install setuptools workaround
   shell:
-    cmd: pip3 install setuptools -U
+    cmd: pip3 install setuptools importlib_resources>=5.10.2 importlib_metadata>=6 -U
 
 - name: Install Pip Packages
   pip:
