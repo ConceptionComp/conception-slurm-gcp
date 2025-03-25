@@ -6,9 +6,17 @@ set -eo pipefail
 echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
 curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
 add-apt-repository -y ppa:deadsnakes/ppa
+
+# setup nvidia container tools
+curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
+&& curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
+sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
+tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
+
 chgrp -Rh 2345 /opt/venv
 chmod -R 775 /opt/venv
-apt-get update &&  apt-get install -y google-cloud-cli
+
+apt-get update &&  apt-get install -y google-cloud-cli nvidia-container-toolkit
 
 cd /opt/apps
 

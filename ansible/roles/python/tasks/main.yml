@@ -66,6 +66,12 @@
   shell:
     cmd: pip3 install "Cython<3.0" pyyaml --no-build-isolation {{ extra_pip_args }}
 
+- name: Install setuptools workaround
+  pip:
+    executable: pip3
+    state: present
+    name: setuptools~=65.0.0
+
 - name: Install Pip Packages
   pip:
     requirements: '{{ requirements_file.results[0].dest }}'
