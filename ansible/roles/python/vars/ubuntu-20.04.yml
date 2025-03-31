@@ -21,6 +21,6 @@ python_packages:
 - python3.10-dev
 - python3.10-distutils
 - python3-pip
-- python3-setuptools
+# - python3-setuptools
 - python3-virtualenv
  
