@@ -19,10 +19,14 @@
     keyserver: hkp://keyserver.ubuntu.com:80
     state: present
 
-- name: Configure R GIS repository (apt)
-  apt_repository:
-    repo: deb http://ppa.launchpad.net/ubuntugis/ubuntugis-unstable/ubuntu {{ ansible_distribution_release }} main
-    state: present
+# - name: Configure R GIS repository (apt)
+#   apt_repository:
+#     repo: deb http://ppa.launchpad.net/ubuntugis/ubuntugis-unstable/ubuntu {{ ansible_distribution_release }} main
+#     state: present
+
+- name: Add UbuntuGIS stable repo
+  ansible.builtin.apt_repository:
+    repo: ppa:ubuntugis/ppa
 
 - name: Configure R cran2deb4ubuntu (apt)
   shell: add-apt-repository -y ppa:c2d4u.team/c2d4u4.0+ && apt update
