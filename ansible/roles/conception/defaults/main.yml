@@ -6,24 +6,28 @@ apps:
     modulefiles: '{{paths.modulefiles}}/cellranger/7.0.1.lua'
     path: '{{paths.apps}}/cellranger/7.0.1'
     gcp: true
+    arches: ["x86_64"]
   - name: cellranger-8
     url: gs://conception-automation-misc/software/cellranger-8.0.1.tar.gz
     dest: '{{paths.apps}}/cellranger/8.0.1'
     modulefiles: '{{paths.modulefiles}}/cellranger/8.0.1.lua'
     path: '{{paths.apps}}/cellranger/8.0.1'
     gcp: true
+    arches: ["x86_64"]
   - name: cellranger-arc
     url: gs://conception-automation-misc/software/cellranger-arc-2.0.2.tar.gz
     dest: '{{paths.apps}}/cellranger-arc/2.0.2'
     modulefiles: '{{paths.modulefiles}}/cellranger-arc/2.0.2.lua'
     path: '{{paths.apps}}/cellranger-arc/2.0.2'
     gcp: true
+    arches: ["x86_64"]
   - name: bismark
     url: gs://conception-automation-misc/software/Bismark-0.22.3.tar.gz
     dest: '{{paths.apps}}/bismark/0.22.3'
     modulefiles: '{{paths.modulefiles}}/bismark/0.22.3.lua'
     path: '{{paths.apps}}/bismark/0.22.3'
     gcp: true
+    arches: ["x86_64"]
   - name: htslib
     url:  https://github.com/samtools/htslib/releases/download/1.17/htslib-1.17.tar.bz2
     dest: '/tmp/htslib'
@@ -43,6 +47,7 @@ apps:
       dir: '{{paths.apps}}/STAR/2.7.10a/source'
       cmds:
         - 'make'
+    arches: ["x86_64"]
   - name: trimgalore
     url: https://github.com/FelixKrueger/TrimGalore/archive/refs/tags/0.6.7.zip
     dest: '{{paths.apps}}/TrimGalore/0.6.7'
@@ -82,7 +87,7 @@ apps:
         - 'make'
         - 'make install'
   - name: pandoc
-    url: https://github.com/jgm/pandoc/releases/download/2.19.2/pandoc-2.19.2-linux-amd64.tar.gz
+    url: "https://github.com/jgm/pandoc/releases/download/2.19.2/pandoc-2.19.2-linux-{{ deb_arch }}.tar.gz"
     dest: '{{paths.apps}}/pandoc/2.19.2'
     modulefiles: '{{paths.modulefiles}}/pandoc/2.19.2.lua'
     path: '{{paths.apps}}/pandoc/2.19.2/bin'
@@ -91,6 +96,7 @@ apps:
     dest: '{{paths.apps}}/sratoolkit/current'
     modulefiles: '{{paths.modulefiles}}/sratoolkit/current.lua'
     path: '{{paths.apps}}/sratoolkit/current/bin'
+    arches: ["x86_64"]
   - name: gatk
     url: https://github.com/broadinstitute/gatk/releases/download/4.3.0.0/gatk-4.3.0.0.zip
     dest: '{{paths.apps}}/gatk/4.3.0.0'
@@ -126,6 +132,7 @@ apps:
     modulefiles: '{{paths.modulefiles}}/fastx_toolkit/0.0.14.lua'
     path: '{{paths.apps}}/fastx_toolkit/0.0.14/bin/'
     gcp: true
+    arches: ["x86_64"]
     install:
       dir: '{{paths.apps}}/fastx_toolkit/0.0.14/bin'
       cmds:
@@ -143,14 +150,15 @@ apps:
         - make
         - make install
   - name: seqkit
-    url: https://github.com/shenwei356/seqkit/releases/download/v2.4.0/seqkit_linux_amd64.tar.gz
+    url: "https://github.com/shenwei356/seqkit/releases/download/v2.4.0/seqkit_linux_{{ deb_arch }}.tar.gz"
     dest: '{{paths.apps}}/seqkit/v2.4.0'
     modulefiles: '{{paths.modulefiles}}/seqkit/v2.4.0.lua'
     path: '{{paths.apps}}/seqkit/v2.4.0'
   - name: fiji
-    url: https://downloads.imagej.net/fiji/latest/fiji-linux64.zip
+    url: https://downloads.imagej.net/fiji/archive/20200808-1942/fiji-linux64.zip
     dest: '{{paths.apps}}/fiji/latest'
     modulefiles: '{{paths.modulefiles}}/fiji/latest.lua'
     path: '{{paths.apps}}/fiji/latest/Fiji.app'
+    arches: ["x86_64"]
 # default_modules:
 #   - 

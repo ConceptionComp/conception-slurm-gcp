@@ -27,9 +27,40 @@
   - '{{ ansible_os_family|lower }}.yml'
 
 - name: Install Packages
-  package:
+  apt:
     name: '{{common_packages}}'
     state: present
+    install_recommends: no
+
+- name: Install x86_64-only Packages
+  apt:
+    name: '{{common_packages_x86_only}}'
+    state: present
+    install_recommends: no
+  when:
+    - ansible_architecture == "x86_64"
+    - common_packages_x86_only is defined
+
+- name: Add apptainer PPA
+  apt_repository:
+    repo: "ppa:apptainer/ppa"
+    state: present
+    update_cache: yes
+  register: _ppa_result
+  retries: 3
+  delay: 15
+  until: _ppa_result is succeeded
+
+- name: Install container and GPU-conditional tooling
+  apt:
+    name:
+      - squashfuse
+      - fuse3
+      - e2fsprogs
+      - gocryptfs
+      - apptainer
+    state: present
+    update_cache: no
 
 - name: Copy Pip Requirements File
   copy:
@@ -47,9 +78,11 @@
 - name: Install Pip Packages
   pip:
     requirements: '{{ requirements_file.results[0].dest }}'
-    extra_args: --upgrade --ignore-installed
+    extra_args: --upgrade
     executable: pip3
     state: present
+  async: 3600
+  poll: 30
 
 - name: Copy Cuda Pip Requirements File
   copy:
@@ -75,10 +108,13 @@
      requirements: '{{ cuda_requirements_file.results[0].dest }}'
      virtualenv: /opt/venv/cuda-venv
      virtualenv_command: /usr/bin/python3.10 -m venv
+  async: 3600
+  poll: 30
 
 - name: Install Module apps
   include_tasks: modules.yml
   loop: "{{ apps }}"
+  when: item.arches is not defined or ansible_architecture in item.arches
 
 - name: Set default modules
   template:

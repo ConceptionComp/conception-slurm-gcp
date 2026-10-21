@@ -24,6 +24,7 @@ common_packages:
 - bowtie2
 - pigz
 - libgsl-dev
+- nfs4-acl-tools
 
 python_packages:
 - selenium

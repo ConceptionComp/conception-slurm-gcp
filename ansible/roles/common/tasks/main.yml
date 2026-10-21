@@ -34,9 +34,10 @@
   - os/{{ ansible_os_family|lower }}.yml
 
 - name: Install Packages
-  package:
+  apt:
     name: '{{common_packages}}'
     state: present
+    install_recommends: no
 
 - name: Add /usr/local/bin to PATH
   template:

@@ -145,6 +145,12 @@ variable "install_cuda" {
   default     = true
 }
 
+variable "install_pyxis" {
+  description = "enable install of pyxis (NVIDIA container runtime for Slurm); requires CUDA — set false on ARM64"
+  type        = bool
+  default     = true
+}
+
 variable "nvidia_version" {
   description = "choose the major nvidia version to install via runfile. Must match a version file in ansible cuda role."
   type        = string

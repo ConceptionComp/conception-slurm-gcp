@@ -2,6 +2,13 @@
 export DEBIAN_FRONTEND="noninteractive"
 set -eo pipefail
 
+# Singularity CE — Ubuntu 20.04 only
+# Ubuntu 22.04 uses Apptainer (installed via ppa:apptainer/ppa in the conception Ansible role)
+if [ "$(lsb_release -rs)" != "20.04" ]; then
+  echo "singularity.sh: skipping Singularity CE on Ubuntu $(lsb_release -rs) — use apptainer instead"
+  exit 0
+fi
+
 apt-get update && apt-get install -y \
     build-essential \
     libssl-dev \

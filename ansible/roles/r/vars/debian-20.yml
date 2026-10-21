@@ -16,6 +16,7 @@ r_packages:
 # - r-cran-sf
 # - r-cran-terra
 # - r-cran-hdf5r
+- gfortran
 - libcurl4-openssl-dev
 - libmysqlclient-dev
 - default-libmysqlclient-dev

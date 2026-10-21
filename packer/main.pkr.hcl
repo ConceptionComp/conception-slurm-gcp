@@ -32,6 +32,7 @@ locals {
     install_lustre   = var.install_lustre
     install_gcsfuse  = var.install_gcsfuse
     monitoring_agent = var.monitoring_agent
+    install_pyxis    = var.install_pyxis
   }
 
   parse_version = regex("^(?P<major>\\d+)(?:\\.(?P<minor>\\d+))?(?:\\.(?P<patch>\\d+))?|(?P<branch>\\w+)$", var.slurmgcp_version)

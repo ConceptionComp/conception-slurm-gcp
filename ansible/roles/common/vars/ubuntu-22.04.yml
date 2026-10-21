@@ -41,6 +41,7 @@ common_packages:
 - lynx
 - make
 - openjdk-8-jdk
+- openjdk-17-jdk
 - picard-tools
 - pciutils
 - pdsh

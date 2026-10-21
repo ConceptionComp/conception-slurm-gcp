@@ -171,3 +171,12 @@
     path: /tmp/cuda_runfile
     state: absent
   when: cuda_runfile_remove
+
+- name: Hold GCP kernel metapackages to prevent apt from upgrading past installed NVIDIA driver
+  ansible.builtin.dpkg_selections:
+    name: "{{ item }}"
+    selection: hold
+  loop:
+    - linux-image-gcp
+    - linux-headers-gcp
+  when: ansible_pkg_mgr == "apt"

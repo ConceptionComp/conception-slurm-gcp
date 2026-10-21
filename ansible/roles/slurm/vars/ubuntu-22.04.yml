@@ -38,6 +38,7 @@ slurm_packages:
 - libssl-dev
 - libyaml-dev
 - lua5.3
+- lua-posix
 - man2html-base
 - numactl
 - rrdtool

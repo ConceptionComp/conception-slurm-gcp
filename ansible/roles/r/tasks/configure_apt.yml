@@ -1,6 +1,12 @@
 ---
 # tasks file for ansible-role-cuda
 
+- name: Remove command-not-found to prevent cnf-update-db Post-Invoke failures on apt-get update
+  apt:
+    name: command-not-found
+    state: absent
+  when: ansible_pkg_mgr == "apt"
+
 # sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
 - name: Trust packaging key for R repositories (apt)
   apt_key:
@@ -24,11 +30,23 @@
     repo: deb http://ppa.launchpad.net/ubuntugis/ubuntugis-unstable/ubuntu {{ ansible_distribution_release }} main
     state: present
 
+- name: Add ubuntugis stable PPA
+  apt_repository:
+    repo: "deb https://ppa.launchpadcontent.net/ubuntugis/ppa/ubuntu {{ ansible_distribution_release }} main"
+    state: present
+    update_cache: yes
+
 - name: Configure R cran2deb4ubuntu (apt)
   shell: add-apt-repository -y ppa:c2d4u.team/c2d4u4.0+ && apt update
+  when: ansible_architecture == "x86_64"
+  register: _ppa_result
+  retries: 3
+  delay: 15
+  until: _ppa_result is succeeded
 
 - name: Install Packages
   apt:
     name: '{{ r_packages }}'
     update_cache: true
     state: present
+    install_recommends: no

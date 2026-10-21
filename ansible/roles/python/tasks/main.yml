@@ -26,6 +26,10 @@
 - name: Configure Python repo
   apt_repository:
     repo: ppa:deadsnakes/ppa
+  register: _ppa_result
+  retries: 3
+  delay: 15
+  until: _ppa_result is succeeded
 
 - name: Install Packages
   package:
@@ -37,8 +41,10 @@
     update_cache: true
 
 - name: update alternatives to python38
-  shell:
-    cmd: alternatives --set python3 /usr/bin/python3.8
+  community.general.alternatives:
+    name: python3
+    path: /usr/bin/python3.8
+    link: /usr/bin/python3
   when: python38_installed
 
 - name: Upgrade Pip
@@ -72,9 +78,13 @@
     state: present
     name: setuptools~=65.0.0
 
+- name: Pre-install umi-tools without build isolation (ez_setup.py / symbol module workaround for Python 3.10+)
+  shell:
+    cmd: pip3 install --no-build-isolation umi-tools {{ extra_pip_args }}
+
 - name: Install Pip Packages
   pip:
     requirements: '{{ requirements_file.results[0].dest }}'
-    extra_args: --upgrade --ignore-installed {{ extra_pip_args }}
+    extra_args: --upgrade {{ extra_pip_args }}
     executable: pip3
     state: present

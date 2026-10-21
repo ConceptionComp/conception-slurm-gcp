@@ -30,6 +30,7 @@
 - block:
   - name: Reboot
     reboot:
+      post_reboot_delay: 30
   - name: Gather facts after reboot
     setup:
   when: reboot

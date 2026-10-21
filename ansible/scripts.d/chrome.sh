@@ -1,17 +1,22 @@
 #!/bin/bash
 set -eo pipefail
 
-LATEST_CHROME_RELEASE=$(curl -s https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json | jq '.channels.Stable')
-VERSION=$(echo "$LATEST_CHROME_RELEASE" | jq -r '.version')
-# CHROME_URL=$(echo "$LATEST_CHROME_RELEASE" | jq -r '.downloads.chrome[] | select(.platform == "linux64"')
-CHROME_DRIVER_URL=$(echo "$LATEST_CHROME_RELEASE" | jq -r '.downloads.chromedriver[] | select(.platform == "linux64") | .url')
-# Install Chrome Binary
-wget --no-verbose -O /var/tmp/chrome.deb https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${VERSION}-1_amd64.deb
-apt install -y /var/tmp/chrome.deb
-rm /var/tmp/chrome.deb
-# Install ChromeDriver
+if [ "$(uname -m)" != "x86_64" ]; then
+  echo "chrome.sh: skipping Chrome/ChromeDriver installation on $(uname -m) — x86_64 only"
+  exit 0
+fi
 
-wget -N $CHROME_DRIVER_URL -P ~/
+# Install Google Chrome stable via apt repo (more reliable than constructing .deb URLs)
+curl -fsSL https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/google-chrome.gpg
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main" \
+  > /etc/apt/sources.list.d/google-chrome.list
+apt-get update
+apt-get install -y google-chrome-stable
+
+# Install matching ChromeDriver from Chrome for Testing
+CHROME_DRIVER_URL=$(curl -s https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json | \
+  jq -r '.channels.Stable.downloads.chromedriver[] | select(.platform == "linux64") | .url')
+wget -N "$CHROME_DRIVER_URL" -P ~/
 unzip ~/chromedriver-linux64.zip -d ~/
 rm ~/chromedriver-linux64.zip
 mv -f ~/chromedriver-linux64/chromedriver /usr/local/bin/chromedriver

@@ -18,9 +18,16 @@
     name:
     - lua5.3
     - lua-bit32
+    - lua-filesystem
     - lua-posix
     - lua-posix-dev
     - liblua5.3-dev
+    - luarocks
     - tcl
     - tcl-dev
     state: present
+
+- name: Install luaposix via luarocks (Ubuntu 22.04 apt package missing C extension submodules)
+  shell: luarocks --lua-version 5.3 install luaposix
+  args:
+    creates: /usr/local/lib/lua/5.3/posix/ctype.so

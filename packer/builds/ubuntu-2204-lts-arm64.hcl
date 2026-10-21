@@ -38,4 +38,6 @@ machine_type = "t2a-standard-16"
 # PROVISION #
 #############
 
+install_pyxis = true
+
 # slurm_version = null

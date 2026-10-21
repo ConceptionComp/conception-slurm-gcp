@@ -15,6 +15,9 @@
 
 python_packages:
 - python3
+- python3.8            # via ppa:deadsnakes/ppa (added by python role tasks/main.yml)
+- python3.8-venv
+- python3.8-dev
 - python3.10
 - python3.10-venv
 - python3.10-dev
@@ -22,3 +25,7 @@ python_packages:
 - python3-pip
 - python3-setuptools
 - python3-virtualenv
+- python2              # via ppa:deadsnakes/ppa; brings python2.7
+- python2-dev
+
+python38_installed: false   # do NOT override system python3 (python3.10); apt_pkg and apt tools break if python3 → python3.8

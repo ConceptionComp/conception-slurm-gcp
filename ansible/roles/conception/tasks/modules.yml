@@ -22,6 +22,9 @@
     url: "{{ item.url }}"
     dest: /tmp
   register: app_archive2
+  retries: 5
+  delay: 10
+  until: app_archive2 is succeeded
   when: item.gcp is not defined
 - name: Set app_archive
   set_fact:

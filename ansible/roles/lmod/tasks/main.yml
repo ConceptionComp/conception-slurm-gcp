@@ -27,6 +27,7 @@
     state: directory
   loop:
   - '{{paths.apps}}'
+  - '{{paths.apps}}/lmod'
   - '{{paths.modulefiles}}'
 
 - name: Git Clone
@@ -47,12 +48,42 @@
   shell:
     cmd: >
       {{lmod_paths.src}}/configure
-      --prefix={{paths.apps}}
+      --prefix={{ '/opt/apps' if ansible_architecture == 'x86_64' else '/usr/local' }}
       --with-ModulePathInit={{paths.apps}}/lmod/.modulespath
       > /dev/null
     chdir: '{{lmod_paths.src}}'
 
-- name: Make Install
+- name: Remove pre-compiled x86 binaries from lmod source pkgs
+  shell: find {{lmod_paths.src}}/pkgs -name "*.so*" -delete
+
+- name: Remove old lmod installation
+  file:
+    path: '{{lmod_paths.build}}'
+    state: absent
+
+- name: Make Install (first pass - compiles from source; may fail at spider cache if lfs.so not built)
+  shell:
+    cmd: make install > /dev/null 2>&1 || true
+    chdir: '{{lmod_paths.src}}'
+
+- name: Ensure lmod lib dir exists
+  file:
+    path: '{{paths.apps}}/lmod/{{lmod_version}}/lib'
+    state: directory
+
+- name: Find system lfs.so (native architecture from lua-filesystem apt package)
+  shell: find /usr/lib -name "lfs.so" -path "*/lua/5.3/*" | head -1
+  register: system_lfs_path
+  changed_when: false
+
+- name: Replace lmod lfs.so with system native version
+  shell: |
+    LIB_DIR={{paths.apps}}/lmod/{{lmod_version}}/lib
+    rm -f $LIB_DIR/lfs.so $LIB_DIR/lfs.so.1 $LIB_DIR/lfs.so.1.0.1
+    ln -sf {{ system_lfs_path.stdout }} $LIB_DIR/lfs.so
+  when: system_lfs_path.stdout != ""
+
+- name: Make Install (second pass - completes spider cache now that lfs.so is present)
   shell:
     cmd: make install > /dev/null
     chdir: '{{lmod_paths.src}}'
@@ -66,3 +97,9 @@
   - {src: '{{lmod_paths.build}}/init/profile', dest: /etc/profile.d/z00_lmod.sh}
   - {src: '{{lmod_paths.build}}/init/cshrc', dest: /etc/profile.d/z00_lmod.csh,}
   # - { src: "{{lmod_paths.build}}/init/profile.fish", dest: "/etc/fish/conf.d/z00_lmod.fish" }
+
+- name: Set BASH_ENV so Slurm batch jobs source lmod without --login
+  lineinfile:
+    path: /etc/environment
+    line: 'BASH_ENV=/etc/profile.d/z00_lmod.sh'
+    create: yes
