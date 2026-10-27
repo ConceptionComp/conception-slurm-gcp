@@ -23,7 +23,7 @@ trap "rm -rf ${TMP_DIR}" EXIT
 # multiqc: the system one (python3.10) picks up x86 numpy from ~/.local over NFS.
 # R is for run_bismark.py's rmarkdown QC report (methylation_bismark_initialReport.Rmd).
 ENV_SPEC="bismark=0.22.3 bowtie2=2.5.4 trim-galore=0.6.7 fastqc=0.11.9 fastq-screen=0.15.2
-  cutadapt=4.9 pandoc=2.19.2 bedtools=2.31.1 multiqc=1.27
+  cutadapt=4.9 pandoc=2.19.2 bedtools=2.31.1 multiqc=1.28
   r-base=4.2.3 r-rmarkdown r-knitr r-ggplot2 r-gplots r-stringr r-dplyr r-reshape2 r-kableextra"
 # Recreated whenever ENV_SPEC changes
 if [ "$(cat "${PREFIX}/bismark/.spec" 2>/dev/null)" != "${ENV_SPEC}" ]; then
